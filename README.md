@@ -1,3 +1,7 @@
+## 🚀 Live Demo: [LogParser](https://ishaansharmathedev.github.io/LogParser/)
+
+> Try it in your browser: **[https://ishaansharmathedev.github.io/LogParser/](https://ishaansharmathedev.github.io/LogParser/)**
+
 # LogParser
 
 A browser-based log file parser that handles Nginx, Apache, syslog, JSON logs, and custom formats.
