@@ -1,60 +1,22 @@
 # LogParser
 
-A CLI log file analyzer. Grep patterns, get frequency counts, filter by time range, and generate summaries — faster than doing it manually with grep and awk.
+A browser-based log file parser that handles Nginx, Apache, syslog, JSON logs, and custom formats.
 
-Built this when I was trying to debug a server issue and kept having to write the same grep pipelines over and over. Decided to just make a proper tool for it.
+## Features
+- **Auto-detection** — identifies log level, timestamp, IP, HTTP status code per line
+- **JSON log support** — parses structured JSON log lines
+- **Level filter** — filter by ERROR, WARN, INFO, DEBUG, FATAL
+- **Live search** — instant text filter across all entries
+- **Stats bar** — breakdown by log level with color badges
+- **Top IPs** — most active IP addresses
+- **Color-coded rows** — ERROR/FATAL rows highlighted
+- **Export** — download filtered results as .log file
 
-## Usage
-
-```bash
-# Basic usage — analyze a log file
-python logparser.py server.log
-
-# Filter by pattern
-python logparser.py server.log --grep "ERROR"
-
-# Show top N most common lines
-python logparser.py server.log --top 20
-
-# Filter by time range (parses common log timestamp formats)
-python logparser.py server.log --from "2024-01-15 10:00" --to "2024-01-15 11:00"
-
-# Count occurrences of a pattern
-python logparser.py server.log --count "status=5[0-9][0-9]"
-
-# Extract and count specific fields (regex capture group)
-python logparser.py server.log --extract "IP: ([0-9.]+)" --top-values 10
-
-# Live tail with pattern filtering
-python logparser.py server.log --tail --grep "ERROR"
+## Structure
+```
+src/parser.js   # Line parser, regex patterns, stats, filter
+src/app.js      # UI, rendering, search, export
 ```
 
-## Supported log formats
-
-Auto-detects:
-- Apache/Nginx access logs
-- Syslog format
-- Python logging format
-- Generic ISO timestamp format
-- Falls back to treating each line as raw text
-
-## Output example
-
-```
-File: server.log  (45,231 lines)
-Time range: 2024-01-15 09:00:02 → 2024-01-15 23:59:58
-
-Top patterns:
-  ERROR  →  234 occurrences (0.52%)
-  WARN   →  891 occurrences (1.97%)
-  INFO   → 44106 occurrences (97.51%)
-
-Top 5 IP addresses:
-  192.168.1.45   →  1,203 requests
-  10.0.0.12      →    891 requests
-  ...
-```
-
----
-
-Python stdlib only. No external dependencies. Tested on Apache, Nginx, and Python app logs.
+## License
+MIT
